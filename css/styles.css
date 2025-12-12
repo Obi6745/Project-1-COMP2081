@@ -1,0 +1,757 @@
+/* Automoblox Website Styles */
+
+/* Setting up custom fonts using @font-face - this lets us use our own font files */
+/* Display font for headings - regular weight */
+@font-face {
+    font-family: 'AutomobloxDisplay';
+    src: url('../fonts/display-regular.woff2') format('woff2'),
+         url('../fonts/display-regular.woff') format('woff');
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap; /* Shows text immediately while font loads */
+}
+
+/* Display font for headings - bold weight */
+@font-face {
+    font-family: 'AutomobloxDisplay';
+    src: url('../fonts/display-bold.woff2') format('woff2'),
+         url('../fonts/display-bold.woff') format('woff');
+    font-weight: 700;
+    font-style: normal;
+    font-display: swap;
+}
+
+/* Body font for regular text - regular weight */
+@font-face {
+    font-family: 'AutomobloxBody';
+    src: url('../fonts/body-regular.woff2') format('woff2'),
+         url('../fonts/body-regular.woff') format('woff');
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
+}
+
+/* Body font for regular text - bold weight */
+@font-face {
+    font-family: 'AutomobloxBody';
+    src: url('../fonts/body-bold.woff2') format('woff2'),
+         url('../fonts/body-bold.woff') format('woff');
+    font-weight: 700;
+    font-style: normal;
+    font-display: swap;
+}
+
+/* CSS Variables - store colors here so we can reuse them easily */
+/* Using :root makes these available everywhere */
+:root {
+    --primary-color: #6366f1;
+    --secondary-color: #8b5cf6;
+    --accent-color: #ec4899;
+    --dark-color: #1e293b;
+    --light-color: #ffffff;
+    --text-color: #334155;
+    --border-color: #e2e8f0;
+    --bg-color: #f8fafc;
+    --card-hover: #06b6d4;
+}
+
+/* Typography - setting up fonts for the whole page */
+body {
+    font-family: 'AutomobloxBody', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; /* Fallback fonts if custom font doesn't load */
+    color: var(--text-color);
+    background-color: var(--bg-color);
+}
+
+/* All headings use the display font */
+h1, h2, h3, h4, h5, h6 {
+    font-family: 'AutomobloxDisplay', 'Arial Black', Arial, sans-serif;
+    font-weight: 700; /* Bold */
+    color: var(--dark-color);
+    margin-bottom: 1rem;
+    letter-spacing: -0.02em; /* Makes text look tighter */
+}
+
+h1 {
+    font-size: 2.5rem;
+}
+
+h2 {
+    font-size: 2rem;
+}
+
+h3 {
+    font-size: 1.5rem;
+}
+
+p {
+    margin-bottom: 1rem;
+    line-height: 1.8;
+}
+
+/* Header & Navigation */
+header {
+    background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%); /* Gradient background */
+    padding: 1rem 0;
+    position: sticky; /* Stays at top when scrolling */
+    top: 0;
+    z-index: 1000; /* Makes sure header stays on top of other content */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Adds shadow for depth */
+}
+
+.header-container {
+    max-width: 1200px; /* Limits width so content doesn't stretch too wide */
+    margin: 0 auto; /* Centers the container */
+    padding: 0 2rem;
+    display: flex; /* Uses flexbox to arrange logo and nav side by side */
+    justify-content: space-between; /* Puts logo on left, nav on right */
+    align-items: center; /* Vertically centers items */
+}
+
+.logo {
+    height: 50px;
+    width: auto;
+    transition: all 0.3s ease; /* Smooth animation when hovering */
+    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.2)); /* Adds shadow to logo */
+}
+
+.logo:hover {
+    transform: scale(1.1) rotateZ(5deg); /* Makes logo bigger and rotates slightly on hover */
+    filter: drop-shadow(0 4px 8px rgba(236, 72, 153, 0.4));
+}
+
+nav ul {
+    list-style: none; /* Removes bullet points */
+    display: flex; /* Makes nav items horizontal */
+    gap: 1.5rem; /* Space between nav items */
+}
+
+nav a {
+    color: var(--light-color);
+    text-decoration: none; /* Removes underline */
+    font-weight: bold;
+    padding: 0.5rem 1rem;
+    position: relative; /* Needed for the ::after pseudo-element */
+    transition: all 0.3s ease;
+    transform-style: preserve-3d; /* Enables 3D transforms */
+}
+
+/* Creates an animated underline that appears on hover */
+nav a::after {
+    content: ''; /* Creates an empty element */
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    width: 0; /* Starts at 0 width */
+    height: 3px;
+    background: var(--accent-color);
+    transform: translateX(-50%); /* Centers it */
+    transition: width 0.3s ease; /* Animates the width */
+}
+
+nav a:hover::after,
+nav a.active::after {
+    width: 80%;
+}
+
+nav a:hover,
+nav a.active {
+    background-color: var(--accent-color);
+    border-radius: 5px;
+    transform: translateY(-2px) scale(1.05);
+    box-shadow: 0 4px 8px rgba(236, 72, 153, 0.3);
+}
+
+/* Main Content */
+main {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 3rem 2rem;
+}
+
+/* Hero Section - Enhanced with 3D Effects */
+/* The main banner section at the top of the page */
+.hero {
+    text-align: center;
+    padding: 3rem 0;
+    background: linear-gradient(135deg, rgba(99, 102, 241, 0.1) 0%, rgba(139, 92, 246, 0.1) 100%); /* Subtle gradient background */
+    border-radius: 10px;
+    margin-bottom: 3rem;
+    border: 2px solid var(--primary-color);
+    position: relative; /* Needed for absolute positioned children */
+    overflow: hidden; /* Hides the pulsing background effect */
+    transform-style: preserve-3d;
+    animation: heroFadeIn 0.8s ease-out; /* Fades in when page loads */
+    cursor: default;
+}
+
+/* Changes border color on hover */
+.hero:hover {
+    border-color: var(--accent-color);
+    box-shadow: 0 10px 30px rgba(99, 102, 241, 0.2); /* Adds shadow on hover */
+}
+
+@keyframes heroFadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Creates a pulsing background effect behind the hero text */
+.hero::before {
+    content: ''; /* Empty element */
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%; /* Larger than container so it can pulse */
+    height: 200%;
+    background: radial-gradient(circle, rgba(99, 102, 241, 0.1) 0%, transparent 70%); /* Radial gradient */
+    animation: pulse 4s ease-in-out infinite; /* Continuously pulses */
+}
+
+/* Animation that makes the background pulse in and out */
+@keyframes pulse {
+    0%, 100% {
+        transform: scale(1); /* Normal size */
+        opacity: 0.5;
+    }
+    50% {
+        transform: scale(1.1); /* 10% bigger */
+        opacity: 0.8;
+    }
+}
+
+.hero h1 {
+    background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 1rem;
+    position: relative;
+    z-index: 1;
+    animation: titleGlow 3s ease-in-out infinite;
+    text-shadow: 0 0 30px rgba(99, 102, 241, 0.3);
+}
+
+@keyframes titleGlow {
+    0%, 100% {
+        filter: brightness(1);
+    }
+    50% {
+        filter: brightness(1.2);
+    }
+}
+
+.hero p {
+    font-size: 1.1rem;
+    color: var(--dark-color);
+    max-width: 600px;
+    margin: 0 auto;
+    position: relative;
+    z-index: 1;
+    animation: fadeInUp 0.8s ease-out 0.2s backwards;
+}
+
+/* Car Grid - Using CSS Grid instead of Bootstrap */
+/* Enhanced with 3D Effects */
+.cars-grid {
+    display: grid; /* CSS Grid layout */
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); /* Responsive columns - auto fits based on screen size */
+    gap: 2rem; /* Space between grid items */
+    margin-top: 3rem;
+    perspective: 1000px; /* Creates 3D perspective for child elements */
+}
+
+.car-card {
+    background: var(--light-color);
+    border-radius: 10px; /* Rounded corners */
+    overflow: hidden; /* Hides anything that goes outside the border */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+    border: 2px solid var(--border-color);
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); /* Smooth animation with easing */
+    transform-style: preserve-3d; /* Allows 3D transforms on children */
+    position: relative;
+    animation: fadeInUp 0.6s ease-out backwards; /* Card fades in from bottom */
+}
+
+/* Stagger the animation delays so cards appear one after another */
+.car-card:nth-child(1) { animation-delay: 0.1s; }
+.car-card:nth-child(2) { animation-delay: 0.2s; }
+.car-card:nth-child(3) { animation-delay: 0.3s; }
+.car-card:nth-child(4) { animation-delay: 0.4s; }
+.car-card:nth-child(5) { animation-delay: 0.5s; }
+
+/* 3D hover effect - card lifts up and tilts */
+.car-card:hover {
+    box-shadow: 0 20px 40px rgba(99, 102, 241, 0.4); /* Bigger shadow on hover */
+    border-color: var(--primary-color);
+    transform: translateY(-10px) rotateX(5deg) rotateY(-5deg) scale(1.02); /* Moves up, tilts, and slightly scales */
+}
+
+/* Animation definition - card fades in while moving up */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px); /* Starts 30px below */
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0); /* Ends at normal position */
+    }
+}
+
+.car-image-container {
+    height: 250px;
+    background-color: #f5f5f5;
+    overflow: hidden; /* Hides image overflow */
+    position: relative; /* Needed for absolute positioned children */
+    transform-style: preserve-3d;
+}
+
+/* Creates an overlay gradient that appears on hover */
+.car-image-container::before {
+    content: ''; /* Creates empty element */
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0; /* Covers entire container */
+    background: linear-gradient(135deg, rgba(99, 102, 241, 0.1), rgba(139, 92, 246, 0.1));
+    opacity: 0; /* Hidden by default */
+    transition: opacity 0.4s ease;
+    z-index: 1; /* Above the image */
+}
+
+.car-card:hover .car-image-container::before {
+    opacity: 1;
+}
+
+.car-image-container img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Fills container while maintaining aspect ratio */
+    transition: transform 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    transform: scale(1); /* Normal size */
+}
+
+/* Image zooms and rotates slightly on card hover */
+.car-card:hover .car-image-container img {
+    transform: scale(1.1) rotateZ(2deg); /* 10% bigger and 2 degrees rotation */
+}
+
+.car-card-content {
+    padding: 1.5rem;
+    position: relative;
+    z-index: 2;
+}
+
+.car-card h3 {
+    color: var(--primary-color);
+    margin-bottom: 0.5rem;
+    font-size: 1.3rem;
+}
+
+.car-card:hover h3 {
+    color: var(--accent-color);
+}
+
+.car-card p {
+    color: var(--text-color);
+    font-size: 0.95rem;
+    margin-bottom: 1rem;
+}
+
+.car-link {
+    display: inline-block; /* Allows padding and transforms */
+    padding: 0.75rem 1.5rem;
+    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+    color: var(--light-color);
+    text-decoration: none;
+    border-radius: 5px;
+    font-weight: bold;
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    position: relative; /* Needed for ::before */
+    overflow: hidden; /* Hides the ripple effect overflow */
+    transform-style: preserve-3d;
+}
+
+/* Creates a ripple effect on button click/hover */
+.car-link::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0; /* Starts as a dot */
+    height: 0;
+    border-radius: 50%; /* Makes it circular */
+    background: rgba(255, 255, 255, 0.3); /* Semi-transparent white */
+    transform: translate(-50%, -50%); /* Centers it */
+    transition: width 0.6s, height 0.6s; /* Animates the expansion */
+}
+
+.car-link:hover::before {
+    width: 300px;
+    height: 300px;
+}
+
+.car-link:hover {
+    background: linear-gradient(135deg, var(--accent-color), var(--card-hover));
+    transform: scale(1.08) translateZ(20px);
+    box-shadow: 0 8px 20px rgba(236, 72, 153, 0.5);
+}
+
+/* Car Detail Page - Two column layout using CSS Grid */
+.car-detail {
+    display: grid;
+    grid-template-columns: 1fr 1fr; /* Two equal columns */
+    gap: 3rem; /* Space between columns */
+    margin-top: 2rem;
+}
+
+/* Container for the large car image on detail pages */
+.car-detail-image {
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 4px 10px rgba(99, 102, 241, 0.2);
+    background: var(--light-color);
+    padding: 1rem;
+    border: 2px solid var(--primary-color);
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    transform-style: preserve-3d; /* Enables 3D transforms */
+    position: relative;
+}
+
+/* 3D tilt effect on hover - makes image look like it's tilting */
+.car-detail-image:hover {
+    box-shadow: 0 15px 35px rgba(99, 102, 241, 0.5); /* Bigger shadow */
+    border-color: var(--accent-color);
+    transform: perspective(1000px) rotateY(-5deg) rotateX(3deg) scale(1.02); /* Tilts in 3D space */
+}
+
+.car-detail-image img {
+    width: 100%;
+    height: auto;
+    border-radius: 5px;
+    transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.car-detail-image:hover img {
+    transform: scale(1.05) rotateZ(1deg);
+}
+
+.car-detail-info {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.car-specs {
+    background: var(--light-color);
+    padding: 1.5rem;
+    border-radius: 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    border: 2px solid var(--border-color);
+    transition: all 0.3s ease;
+}
+
+.car-specs:hover {
+    border-color: var(--primary-color);
+    box-shadow: 0 4px 10px rgba(99, 102, 241, 0.2);
+}
+
+.car-specs h3 {
+    background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 1rem;
+    border-bottom: 3px solid var(--primary-color);
+    padding-bottom: 0.5rem;
+}
+
+.spec-item {
+    display: flex;
+    justify-content: space-between;
+    padding: 0.75rem 0;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.spec-item:last-child {
+    border-bottom: none;
+}
+
+.spec-label {
+    font-weight: 600;
+    color: var(--dark-color);
+}
+
+.spec-value {
+    color: var(--text-color);
+}
+
+/* SVG Decorative Elements - Enhanced with Animations */
+.svg-decoration {
+    position: absolute;
+    opacity: 0.15; /* Semi-transparent so it doesn't overpower content */
+    z-index: 0; /* Behind other content */
+    pointer-events: none; /* Can't be clicked */
+}
+
+.car-wheel {
+    width: 100px;
+    height: 100px;
+    animation: rotateWheel 20s linear infinite; /* Rotates continuously */
+    filter: drop-shadow(0 4px 8px rgba(99, 102, 241, 0.3)); /* Adds shadow */
+}
+
+/* Animation that rotates the wheel 360 degrees */
+@keyframes rotateWheel {
+    from {
+        transform: rotate(0deg); /* Starts at 0 degrees */
+    }
+    to {
+        transform: rotate(360deg); /* Ends at 360 degrees (full rotation) */
+    }
+}
+
+/* Animated SVG Background Elements */
+.svg-bg-pattern {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    opacity: 0.05;
+    z-index: 0;
+    pointer-events: none;
+}
+
+.svg-gear {
+    animation: rotateGear 15s linear infinite reverse;
+}
+
+@keyframes rotateGear {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+/* Floating Animation for SVG Elements */
+@keyframes float {
+    0%, 100% {
+        transform: translateY(0px) rotate(0deg);
+    }
+    50% {
+        transform: translateY(-20px) rotate(5deg);
+    }
+}
+
+.svg-float {
+    animation: float 6s ease-in-out infinite;
+}
+
+/* Footer */
+footer {
+    background: linear-gradient(135deg, var(--dark-color) 0%, var(--secondary-color) 100%);
+    color: var(--light-color);
+    padding: 2rem 0;
+    margin-top: 4rem;
+    text-align: center;
+}
+
+.footer-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 2rem;
+}
+
+/* Back to Home Link */
+.back-link {
+    display: inline-block;
+    margin-bottom: 2rem;
+    padding: 0.75rem 1.5rem;
+    background: linear-gradient(135deg, var(--secondary-color), var(--primary-color));
+    color: var(--light-color);
+    text-decoration: none;
+    border-radius: 5px;
+    font-weight: bold;
+    transition: all 0.3s ease;
+}
+
+.back-link:hover {
+    background: linear-gradient(135deg, var(--accent-color), var(--card-hover));
+    transform: translateX(-5px);
+    box-shadow: 0 4px 10px rgba(236, 72, 153, 0.3);
+}
+
+.back-link::before {
+    content: '← ';
+    margin-right: 0.5rem;
+}
+
+/* Additional Fun Interactive Elements */
+/* Spec boxes that lift up on hover */
+.car-specs {
+    transform-style: preserve-3d;
+    transition: all 0.3s ease;
+    position: relative;
+}
+
+/* Gradient overlay that appears on hover */
+.car-specs::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(135deg, rgba(99, 102, 241, 0.05), rgba(139, 92, 246, 0.05));
+    opacity: 0; /* Hidden by default */
+    transition: opacity 0.3s ease;
+    border-radius: 10px;
+    z-index: -1; /* Behind the content */
+}
+
+/* Lifts the spec box up and slightly scales it */
+.car-specs:hover {
+    transform: translateZ(10px) scale(1.02); /* Moves forward in 3D space */
+}
+
+/* Shows the gradient overlay on hover */
+.car-specs:hover::before {
+    opacity: 1;
+}
+
+/* Individual spec items (like "Model: C9") */
+.spec-item {
+    transition: all 0.2s ease;
+}
+
+/* Slides to the right and adds background on hover */
+.spec-item:hover {
+    background: linear-gradient(90deg, rgba(99, 102, 241, 0.05), transparent);
+    padding-left: 1rem; /* Adds left padding */
+    transform: translateX(5px); /* Moves 5px to the right */
+}
+
+/* Scroll Animations */
+@keyframes slideInLeft {
+    from {
+        opacity: 0;
+        transform: translateX(-50px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@keyframes slideInRight {
+    from {
+        opacity: 0;
+        transform: translateX(50px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+/* Enhanced Footer */
+footer {
+    position: relative;
+    overflow: hidden;
+}
+
+footer::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, var(--accent-color), transparent);
+    animation: shimmer 3s linear infinite;
+}
+
+footer::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: radial-gradient(circle at 50% 0%, rgba(236, 72, 153, 0.1), transparent 70%);
+    pointer-events: none;
+}
+
+@keyframes shimmer {
+    0% {
+        transform: translateX(-100%);
+    }
+    100% {
+        transform: translateX(100%);
+    }
+}
+
+.footer-content {
+    position: relative;
+    z-index: 1;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .header-container {
+        flex-direction: column;
+        gap: 1rem;
+    }
+
+    nav ul {
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
+    .car-detail {
+        grid-template-columns: 1fr;
+    }
+
+    .cars-grid {
+        grid-template-columns: 1fr;
+    }
+
+    main {
+        padding: 2rem 1rem;
+    }
+
+    .hero {
+        padding: 2rem 1rem;
+    }
+
+    .car-card:hover {
+        transform: translateY(-5px) scale(1.01);
+    }
+}
+
+@media (max-width: 480px) {
+    nav ul {
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+
+    nav a {
+        display: block;
+        text-align: center;
+    }
+
+    .car-card:hover {
+        transform: translateY(-3px);
+    }
+}
+
